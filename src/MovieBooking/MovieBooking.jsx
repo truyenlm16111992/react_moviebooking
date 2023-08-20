@@ -59,7 +59,7 @@ const MovieBooking = () => {
                                 setCurrent(0);
                                 message.success('Đặt vé thành công!');
                             } else
-                                message.error('Bạn chưa chọn đủ vị trí ghế so với số lượng đặt');
+                                message.error('Bạn chưa chọn đủ vị trí ghế so với số lượng vé đặt');
                         }}>
                             Thanh toán
                         </Button>
