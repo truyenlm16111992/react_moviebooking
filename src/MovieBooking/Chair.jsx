@@ -21,7 +21,7 @@ const Chair = ({ ghe, hang }) => {
                 }
             )}
             onClick={() => {
-                if (bookingList.length < info.amount)
+                if (bookingList.length < info.amount || bookingList.find(item=>item.soGhe===ghe.soGhe))
                     dispatch(movieBookingActions.addToBookingList(ghe));
                 else
                     message.error("Bạn đã chọn đủ số ghế");

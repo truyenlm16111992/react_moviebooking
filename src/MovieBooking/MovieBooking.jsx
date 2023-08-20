@@ -3,28 +3,33 @@ import { Button, message, Steps, theme } from 'antd';
 import { OrderedListOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import BookingInfo from './BookingInfo';
 import ChooseChair from './ChooseChair';
+import Payment from './Payment';
+import { useDispatch, useSelector } from 'react-redux';
+import { movieBookingActions } from '../store/MovieBooking/slice';
 const steps = [
     {
         title: 'Thông tin đặt vé',
-        content: <BookingInfo/>,
+        content: <BookingInfo />,
         icon: <UserOutlined />,
 
     },
     {
         title: 'Chọn vị trí ghế',
-        content: <ChooseChair/>,
+        content: <ChooseChair />,
         icon: <OrderedListOutlined />,
 
     },
     {
         title: 'Thanh toán',
-        content: 'Last-content',
+        content: <Payment />,
         icon: <ShoppingCartOutlined />,
 
     },
 ];
 const MovieBooking = () => {
     const [current, setCurrent] = useState(0);
+    const { info, bookingList } = useSelector(state => state.movieBookingRedux);
+    const dispatch = useDispatch();
     const next = () => {
         setCurrent(current + 1);
     };
@@ -43,12 +48,19 @@ const MovieBooking = () => {
                 <div className='bg-white px-6 py-7 rounded-md'>{steps[current].content}</div>
                 <div className='mt-3'>
                     {current < steps.length - 1 && (
-                        <Button type="primary" className='bg-[#1677ff]' onClick={() => next()}>
+                        <Button type="primary" className='bg-[#1677ff]' onClick={() => (current === 0 && info.name || current > 0) ? next():message.error("Họ và tên không được bỏ trống")}>
                             Tiếp theo
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" className='bg-[#1677ff]' onClick={() => message.success('Processing complete!')}>
+                        <Button type="primary" className='bg-[#1677ff]' onClick={() => {
+                            if (+info.amount === bookingList.length) {
+                                dispatch(movieBookingActions.paymentBooking());
+                                setCurrent(0);
+                                message.success('Đặt vé thành công!');
+                            } else
+                                message.error('Bạn chưa chọn đủ vị trí ghế so với số lượng đặt');
+                        }}>
                             Thanh toán
                         </Button>
                     )}

@@ -14,9 +14,9 @@ const movieBookingSlice = createSlice({
     reducers: {
         updateInfo: (state, { payload }) => {
             if (payload)
-                state.info = {...payload};
+                state.info = { ...payload };
             else
-                state.info = {...initialState.info};
+                state.info = { ...initialState.info };
         },
         changeNumberChairs: (state, { payload }) => {
             state.info.amount = state.info.amount + payload || 1;
@@ -28,6 +28,11 @@ const movieBookingSlice = createSlice({
                 state.bookingList.push(payload);
             else
                 state.bookingList.splice(index, 1);
+        },
+        paymentBooking: (state, { payload }) => {
+            state.bookedList = [...state.bookedList, ...state.bookingList];
+            state.bookingList = [];
+            state.info = { ...initialState.info };
         },
     },
 });
