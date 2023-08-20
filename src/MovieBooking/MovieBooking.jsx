@@ -1,88 +1,71 @@
 import React, { useState } from 'react'
 import { Button, message, Steps, theme } from 'antd';
+import { OrderedListOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import BookingInfo from './BookingInfo';
+import ChooseChair from './ChooseChair';
 const steps = [
     {
-        title: 'First',
-        content: 'First-content',
+        title: 'Thông tin đặt vé',
+        content: <BookingInfo/>,
+        icon: <UserOutlined />,
+
     },
     {
-        title: 'Second',
-        content: 'Second-content',
+        title: 'Chọn vị trí ghế',
+        content: <ChooseChair/>,
+        icon: <OrderedListOutlined />,
+
     },
     {
-        title: 'Last',
+        title: 'Thanh toán',
         content: 'Last-content',
+        icon: <ShoppingCartOutlined />,
+
     },
 ];
 const MovieBooking = () => {
-    // const { token } = theme.useToken();
-    // const [current, setCurrent] = useState(0);
-    // const next = () => {
-    //     setCurrent(current + 1);
-    // };
-    // const prev = () => {
-    //     setCurrent(current - 1);
-    // };
-    // const items = steps.map((item) => ({
-    //     key: item.title,
-    //     title: item.title,
-    // }));
-    // const contentStyle = {
-    //     lineHeight: '260px',
-    //     textAlign: 'center',
-    //     color: token.colorTextTertiary,
-    //     backgroundColor: token.colorFillAlter,
-    //     borderRadius: token.borderRadiusLG,
-    //     border: `1px dashed ${token.colorBorder}`,
-    //     marginTop: 16,
-    // };
+    const [current, setCurrent] = useState(0);
+    const next = () => {
+        setCurrent(current + 1);
+    };
+    const prev = () => {
+        setCurrent(current - 1);
+    };
+    const items = steps.map((item) => ({
+        key: item.title,
+        title: item.title,
+        icon: item.icon,
+    }));
     return (
-        // <div className='min-h-screen bg-[url("../public/images/bgmovie.jpg")] bg-cover bg-no-repeat bg-center'>
-        //     <div className='container mx-auto backdrop-sepia-0 bg-white/60'>
-        //         <div className='mt-5'>a</div>
-        //         <Steps current={current} items={items} />
-        //         <div style={contentStyle}>{steps[current].content}</div>
-        //         <div
-        //             style={{
-        //                 marginTop: 24,
-        //             }}
-        //         >
-        //             {current < steps.length - 1 && (
-        //                 <Button type="primary" onClick={() => next()}>
-        //                     Next
-        //                 </Button>
-        //             )}
-        //             {current === steps.length - 1 && (
-        //                 <Button type="primary" onClick={() => message.success('Processing complete!')}>
-        //                     Done
-        //                 </Button>
-        //             )}
-        //             {current > 0 && (
-        //                 <Button
-        //                     style={{
-        //                         margin: '0 8px',
-        //                     }}
-        //                     onClick={() => prev()}
-        //                 >
-        //                     Previous
-        //                 </Button>
-        //             )}
-        //         </div>
-        //     </div>
-        // </div>
-        <div className='bg-lime-400 m-0'>
-            <div className='mt-5'>
-                <a href="#" className='mt-5'>ABC</a>
-                <div className='mt-5'>
-                    d
+        <div className='flex flex-col min-h-screen bg-[url("../public/images/bgmovie.jpg")] bg-cover bg-no-repeat bg-center'>
+            <div className='container lg:max-w-[1024px] mx-auto backdrop-sepia-0 bg-white/60 my-5 p-3 space-y-3'>
+                <Steps current={current} items={items} />
+                <div className='bg-white px-6 py-7 rounded-md'>{steps[current].content}</div>
+                <div className='mt-3'>
+                    {current < steps.length - 1 && (
+                        <Button type="primary" className='bg-[#1677ff]' onClick={() => next()}>
+                            Tiếp theo
+                        </Button>
+                    )}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" className='bg-[#1677ff]' onClick={() => message.success('Processing complete!')}>
+                            Thanh toán
+                        </Button>
+                    )}
+                    {current > 0 && (
+                        <Button
+                            style={{
+                                margin: '0 8px',
+                            }}
+                            className='bg-[#1677ff] border-none text-white hover:!text-white hover:bg-[#4096ff]'
+                            onClick={() => prev()}
+                        >
+                            Quay lại
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>
-        // <div style={{ background: "red" }}>
-        //     <div style={{margin:5}}>
-        //         a
-        //     </div>
-        // </div>
     )
 }
 
